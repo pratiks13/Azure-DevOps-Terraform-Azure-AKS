@@ -22,12 +22,18 @@ stages:
     - job: TerraformValidateJob
       continueOnError: false
       steps:
-       - task: TerraformInstaller@0
-         displayName: Terraform Install
-         inputs:
-         terraformVersion: 'latest'
-       - task: TerraformCLI@0
-          displayName: Terraform Init
+      - task: PublishPipelineArtifact@1
+        displayName: Publish Artifacts
+        inputs:
+          targetPath: '$(System.DefaultWorkingDirectory)/terraform-manifests'
+          artifact: 'terraform-manifests-out'
+          publishLocation: 'pipeline'
+      - task: TerraformInstaller@0
+        displayName: Terraform Install
+        inputs:
+          terraformVersion: 'latest'
+      - task: TerraformCLI@0
+        displayName: Terraform Init
         inputs:
           command: 'init'
           workingDirectory: '$(System.DefaultWorkingDirectory)/terraform-manifests'
@@ -38,8 +44,8 @@ stages:
           backendAzureRmContainerName: 'tfstatefiles'
           backendAzureRmKey: 'aks-base.tfstate'
           allowTelemetryCollection: false
-       - task: TerraformCLI@0
-         displayName: Terraform Validate
+      - task: TerraformCLI@0
+        displayName: Terraform Validate
         inputs:
           command: 'validate'
           workingDirectory: '$(System.DefaultWorkingDirectory)/terraform-manifests'
@@ -82,7 +88,7 @@ stages:
                 command: 'plan'
                 workingDirectory: '$(Pipeline.Workspace)/terraform-manifests-out'
                 environmentServiceName: 'terraform-aks-azurerm-svc-con'
-                commandOptions: '-var ssh_public_key=$(sshkey.secureFilePath) -var environment=$(DEV_ENVIRONMENT) -out $(Pipeline.Workspace)/Git-Repo-Files/terraform-manifests-out/$(DEV_ENVIRONMENT)-$(Build.BuildId).out'
+                commandOptions: '-var ssh_public_key=$(sshkey.secureFilePath) -var environment=$(DEV_ENVIRONMENT) -out $(Pipeline.Workspace)/terraform-manifests-out/$(DEV_ENVIRONMENT)-$(Build.BuildId).out'
                 allowTelemetryCollection: false
             - task: TerraformCLI@0
               displayName: Terraform Apply
