@@ -35,10 +35,9 @@ stages:
       - task: TerraformCLI@0
         displayName: Terraform Init
         inputs:
-          provider: 'azurerm'
           command: 'init'
           workingDirectory: '$(System.DefaultWorkingDirectory)/terraform-manifests'
-#          backendType: 'azurerm'
+          backendType: 'azurerm'
           backendServiceArm: 'terraform-aks-azurerm-svc-con'
           backendAzureRmResourceGroupName: 'terraform-storage-rg'
           backendAzureRmStorageAccountName: 'terraformstatexlrwdrzs'
@@ -74,15 +73,14 @@ stages:
             - task: TerraformCLI@0
               displayName: Terraform Init
               inputs:
-                provider: 'azurerm'
                 command: 'init'
                 workingDirectory: '$(Pipeline.Workspace)/terraform-manifests-out'
-#                backendType: 'azurerm'
+                backendType: 'azurerm'
                 backendServiceArm: 'terraform-aks-azurerm-svc-con'
                 backendAzureRmResourceGroupName: 'terraform-storage-rg'
                 backendAzureRmStorageAccountName: 'terraformstatexlrwdrzs'
                 backendAzureRmContainerName: 'tfstatefiles'
-                backendAzureRmKey: 'aks-$(DEV_ENVIRONMENT).tfstate'
+                backendAzureRmKey: 'aks-base1.tfstate'
                 allowTelemetryCollection: false
             - task: TerraformCLI@0
               displayName: Terraform Plan
@@ -121,15 +119,14 @@ stages:
             - task: TerraformCLI@0
               displayName: Terraform Init
               inputs:
-                provider: 'azurerm'
                 command: 'init'
                 workingDirectory: '$(Pipeline.Workspace)/terraform-manifests-out'
-#                backendType: 'azurerm'
+                backendType: 'azurerm'
                 backendServiceArm: 'terraform-aks-azurerm-svc-con'
                 backendAzureRmResourceGroupName: 'terraform-storage-rg'
                 backendAzureRmStorageAccountName: 'terraformstatexlrwdrzs'
                 backendAzureRmContainerName: 'tfstatefiles'
-                backendAzureRmKey: 'aks-$(QA_ENVIRONMENT).tfstate'
+                backendAzureRmKey: 'aks-base2.tfstate'
                 allowTelemetryCollection: false
             - task: TerraformCLI@0
               displayName: Terraform Plan
