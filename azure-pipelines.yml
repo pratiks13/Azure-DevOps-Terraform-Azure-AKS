@@ -33,9 +33,9 @@ stages:
         inputs:
           terraformVersion: 'latest'
       - task: TerraformCLI@0
-        displayName: Terraform Init
+        displayName: Terrraform Init
         inputs:
-          command: 'Terraform init'
+          command: 'init'
           workingDirectory: '$(System.DefaultWorkingDirectory)/terraform-manifests'
           backendType: 'azurerm'
           backendServiceArm: 'terraform-aks-azurerm-svc-con'
@@ -71,7 +71,7 @@ stages:
           deploy:
             steps:            
             - task: TerraformCLI@0
-              displayName: Terraform Init
+              displayName: Init
               inputs:
                 command: 'init'
                 workingDirectory: '$(Pipeline.Workspace)/terraform-manifests-out'
