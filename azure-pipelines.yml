@@ -35,13 +35,14 @@ stages:
       - task: TerraformCLI@0
         displayName: Terraform Init
         inputs:
+          provider: 'azurerm'
           command: 'init'
           workingDirectory: '$(System.DefaultWorkingDirectory)/terraform-manifests'
-          backendType: 'azurerm'
+#          backendType: 'azurerm'
           backendServiceArm: 'terraform-aks-azurerm-svc-con'
-#          backendAzureRmResourceGroupName: 'terraform-storage-rg'
-#          backendAzureRmStorageAccountName: 'terraformstatexlrwdrzs'
-#          backendAzureRmContainerName: 'tfstatefiles'
+          backendAzureRmResourceGroupName: 'terraform-storage-rg'
+          backendAzureRmStorageAccountName: 'terraformstatexlrwdrzs'
+          backendAzureRmContainerName: 'tfstatefiles'
           backendAzureRmKey: 'aks-base.tfstate'
           allowTelemetryCollection: false
       - task: TerraformCLI@0
@@ -73,13 +74,14 @@ stages:
             - task: TerraformCLI@0
               displayName: Terraform Init
               inputs:
+                provider: 'azurerm'
                 command: 'init'
                 workingDirectory: '$(Pipeline.Workspace)/terraform-manifests-out'
-                backendType: 'azurerm'
+#                backendType: 'azurerm'
                 backendServiceArm: 'terraform-aks-azurerm-svc-con'
-#                backendAzureRmResourceGroupName: 'terraform-storage-rg'
-#                backendAzureRmStorageAccountName: 'terraformstatexlrwdrzs'
-#                backendAzureRmContainerName: 'tfstatefiles'
+                backendAzureRmResourceGroupName: 'terraform-storage-rg'
+                backendAzureRmStorageAccountName: 'terraformstatexlrwdrzs'
+                backendAzureRmContainerName: 'tfstatefiles'
                 backendAzureRmKey: 'aks-$(DEV_ENVIRONMENT).tfstate'
                 allowTelemetryCollection: false
             - task: TerraformCLI@0
@@ -119,13 +121,14 @@ stages:
             - task: TerraformCLI@0
               displayName: Terraform Init
               inputs:
+                provider: 'azurerm'
                 command: 'init'
                 workingDirectory: '$(Pipeline.Workspace)/terraform-manifests-out'
-                backendType: 'azurerm'
+#                backendType: 'azurerm'
                 backendServiceArm: 'terraform-aks-azurerm-svc-con'
-#               backendAzureRmResourceGroupName: 'terraform-storage-rg'
-#               backendAzureRmStorageAccountName: 'terraformstatexlrwdrzs'
-#               backendAzureRmContainerName: 'tfstatefiles'
+                backendAzureRmResourceGroupName: 'terraform-storage-rg'
+                backendAzureRmStorageAccountName: 'terraformstatexlrwdrzs'
+                backendAzureRmContainerName: 'tfstatefiles'
                 backendAzureRmKey: 'aks-$(QA_ENVIRONMENT).tfstate'
                 allowTelemetryCollection: false
             - task: TerraformCLI@0
